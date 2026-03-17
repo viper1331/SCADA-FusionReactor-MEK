@@ -23,9 +23,15 @@ local DTV_RTU_S_DATA = {
     SET_CONT_MODE = 1
 }
 
+-- fusion reactor rtu session commands w/ parameters
+local FUS_RTU_S_DATA = {
+    SET_INJ_RATE = 1
+}
+
 qtypes.TBV_RTU_S_CMDS = TBV_RTU_S_CMDS
 qtypes.TBV_RTU_S_DATA = TBV_RTU_S_DATA
 qtypes.DTV_RTU_S_CMDS = DTV_RTU_S_CMDS
 qtypes.DTV_RTU_S_DATA = DTV_RTU_S_DATA
+qtypes.FUS_RTU_S_DATA = FUS_RTU_S_DATA
 
 return qtypes

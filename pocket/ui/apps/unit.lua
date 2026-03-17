@@ -406,7 +406,7 @@ local function new_view(root)
 
             for f_id = 1, #unit.fusion_ps_tbl do
                 local ps = unit.fusion_ps_tbl[f_id]
-                nav_links[i].fusion[f_id] = fusion(app, u_page, panes, fus_pane, f_id, ps, update)
+                nav_links[i].fusion[f_id] = fusion(app, u_page, panes, fus_pane, i, f_id, ps, update)
             end
 
             --#endregion

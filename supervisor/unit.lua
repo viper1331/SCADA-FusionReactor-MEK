@@ -8,6 +8,7 @@ local unit_logic = require("supervisor.unit_logic")
 
 local plc        = require("supervisor.session.plc")
 local rsctl      = require("supervisor.session.rsctl")
+local qtypes     = require("supervisor.session.rtu.qtypes")
 local svsessions = require("supervisor.session.svsessions")
 
 local AISTATE       = alarm_ctl.AISTATE
@@ -22,6 +23,7 @@ local WASTE_MODE    = types.WASTE_MODE
 local WASTE         = types.WASTE_PRODUCT
 
 local PLC_S_CMDS = plc.PLC_S_CMDS
+local FUS_RTU_S_DATA = qtypes.FUS_RTU_S_DATA
 
 local IO = rsio.IO
 
@@ -823,6 +825,22 @@ function unit.new(reactor_id, num_boilers, num_turbines, ext_idle, aux_coolant)
         elseif mode > WASTE_MODE.MANUAL_ANTI_MATTER then
             log.debug(util.c("invalid waste mode setting ", mode))
         end
+    end
+
+    -- set fusion reactor injection rate
+    ---@param rate number
+    ---@return boolean success
+    function public.set_fusion_injection(rate)
+        if type(rate) ~= "number" then return false end
+
+        local session = self.fusion[1]
+        if session == nil then return false end
+
+        local injection_rate = math.floor(rate + 0.5)
+        if injection_rate < 0 then injection_rate = 0 end
+
+        session.get_cmd_queue().push_data(FUS_RTU_S_DATA.SET_INJ_RATE, injection_rate)
+        return true
     end
 
     -- set the automatic control max burn rate for this unit

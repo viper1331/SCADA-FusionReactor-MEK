@@ -394,6 +394,14 @@ function process.set_rate(id, rate)
     log.debug(util.c("PROCESS: UNIT[", id, "] SET BURN ", rate))
 end
 
+-- set fusion injection rate
+---@param id integer unit ID
+---@param rate number fusion injection rate
+function process.set_fusion_injection(id, rate)
+    pctl.comms.send_unit_command(U_CMD.SET_FUSION_INJ, id, rate)
+    log.debug(util.c("PROCESS: UNIT[", id, "] SET FUSION INJ ", rate))
+end
+
 -- assign a unit to a group
 ---@param unit_id integer unit ID
 ---@param group_id integer|0 group ID or 0 for independent

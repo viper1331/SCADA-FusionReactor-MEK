@@ -246,6 +246,7 @@ function ioctl.init_fac(conf)
             reset_rps = function () process.reset_rps(i) end,
             ack_alarms = function () process.ack_all_alarms(i) end,
             set_burn = function (rate) process.set_rate(i, rate) end,   ---@param rate number burn rate
+            set_fusion_injection = function (rate) process.set_fusion_injection(i, rate) end, ---@param rate number fusion injection rate
 
             start_ack = nil,        ---@type fun(success: boolean)
             scram_ack = nil,        ---@type fun(success: boolean)

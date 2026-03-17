@@ -198,6 +198,7 @@ function ioctl.init(conf, comms, temp_scale, energy_scale)
             reset_rps = function () io.process.reset_rps(i) end,
             ack_alarms = function () io.process.ack_all_alarms(i) end,
             set_burn = function (rate) process.set_rate(i, rate) end,        ---@param rate number burn rate
+            set_fusion_injection = function (rate) process.set_fusion_injection(i, rate) end, ---@param rate number fusion injection rate
             set_waste = function (mode) process.set_unit_waste(i, mode) end, ---@param mode WASTE_MODE waste processing mode
 
             set_group = function (grp) process.set_group(i, grp) end,        ---@param grp integer|0 group ID or 0 for manual

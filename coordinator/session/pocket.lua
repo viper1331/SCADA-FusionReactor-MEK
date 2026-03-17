@@ -219,6 +219,13 @@ function pocket.new_session(id, s_addr, i_seq_num, in_queue, out_queue, timeout)
                             else
                                 log.debug(log_tag .. "CRDN unit command burn rate missing option")
                             end
+                        elseif cmd == UNIT_COMMAND.SET_FUSION_INJ then
+                            if (pkt.length == 3) and (type(pkt.data[3]) == "number") then
+                                log.info(util.c(log_tag, "UNIT[", uid, "] SET FUSION INJ ", pkt.data[3]))
+                                process.set_fusion_injection(uid, pkt.data[3])
+                            else
+                                log.debug(log_tag .. "CRDN unit command fusion injection missing option")
+                            end
                         elseif cmd == UNIT_COMMAND.SET_WASTE then
                             if (pkt.length == 3) and (type(pkt.data[3]) == "number") and
                                (pkt.data[3] >= WASTE_MODE.AUTO) and (pkt.data[3] <= WASTE_MODE.MANUAL_ANTI_MATTER) then

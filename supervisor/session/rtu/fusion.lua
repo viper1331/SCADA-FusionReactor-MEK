@@ -1,26 +1,31 @@
 local log          = require("scada-common.log")
+local mqueue       = require("scada-common.mqueue")
 local types        = require("scada-common.types")
 local util         = require("scada-common.util")
 
+local qtypes       = require("supervisor.session.rtu.qtypes")
 local unit_session = require("supervisor.session.rtu.unit_session")
 
 local fusion = {}
 
 local RTU_UNIT_TYPE = types.RTU_UNIT_TYPE
 local MODBUS_FCODE = types.MODBUS_FCODE
+local FUS_RTU_S_DATA = qtypes.FUS_RTU_S_DATA
 
 local TXN_TYPES = {
     FORMED = 1,
     BUILD = 2,
     STATE = 3,
-    TANKS = 4
+    TANKS = 4,
+    SET_INJ = 5
 }
 
 local TXN_TAGS = {
     "fusion.formed",
     "fusion.build",
     "fusion.state",
-    "fusion.tanks"
+    "fusion.tanks",
+    "fusion.set_inj"
 }
 
 local PERIODICS = {
@@ -29,6 +34,8 @@ local PERIODICS = {
     STATE = 500,
     TANKS = 1000
 }
+
+local WRITE_BUSY_WAIT = 1000
 
 -- create a new fusion reactor rtu session runner
 ---@nodiscard
@@ -51,6 +58,8 @@ function fusion.new(session_id, unit_id, advert, out_queue)
     local self = {
         session = unit_session.new(session_id, unit_id, advert, out_queue, log_tag, TXN_TAGS),
         has_build = false,
+        injection_cmd = nil, ---@type integer|nil
+        resend_injection = false,
         periodics = {
             next_formed_req = 0,
             next_build_req = 0,
@@ -148,6 +157,17 @@ function fusion.new(session_id, unit_id, advert, out_queue)
         end
     end
 
+    -- set the fusion reactor injection rate
+    ---@param rate integer
+    local function _set_injection_rate(rate)
+        self.injection_cmd = rate
+
+        -- write holding register 1 (injection rate)
+        if self.session.send_request(TXN_TYPES.SET_INJ, MODBUS_FCODE.WRITE_SINGLE_HOLD_REG, { 1, rate }, WRITE_BUSY_WAIT) == false then
+            self.resend_injection = true
+        end
+    end
+
     -- PUBLIC FUNCTIONS --
 
     -- handle an ADU
@@ -199,6 +219,10 @@ function fusion.new(session_id, unit_id, advert, out_queue)
                 self.db.state.injection_rate    = adu.data[6]
                 self.db.state.ignited           = adu.data[7]
                 self.db.state.passive_generation = adu.data[8]
+
+                if self.injection_cmd == nil then
+                    self.injection_cmd = self.db.state.injection_rate
+                end
             else
                 log.debug(log_tag .. "MODBUS transaction reply length mismatch (" .. TXN_TAGS[txn_type] .. ")")
             end
@@ -224,6 +248,8 @@ function fusion.new(session_id, unit_id, advert, out_queue)
             else
                 log.debug(log_tag .. "MODBUS transaction reply length mismatch (" .. TXN_TAGS[txn_type] .. ")")
             end
+        elseif txn_type == TXN_TYPES.SET_INJ then
+            -- successful acknowledgement
         elseif txn_type == nil then
             log.error(log_tag .. "unknown transaction reply")
         else
@@ -234,6 +260,47 @@ function fusion.new(session_id, unit_id, advert, out_queue)
     -- update this runner
     ---@param time_now integer milliseconds
     function public.update(time_now)
+        -- check command queue
+        while self.session.in_q.ready() do
+            -- get a new message to process
+            local msg = self.session.in_q.pop()
+
+            if msg ~= nil then
+                if msg.qtype == mqueue.TYPE.DATA then
+                    -- instruction with body
+                    local cmd = msg.message ---@type queue_data
+
+                    if cmd.key == FUS_RTU_S_DATA.SET_INJ_RATE then
+                        if type(cmd.val) == "number" then
+                            local rate = math.floor(cmd.val + 0.5)
+                            if rate < 0 then rate = 0 end
+                            _set_injection_rate(rate)
+                        else
+                            log.debug(util.c(log_tag, "invalid fusion injection rate value type ", type(cmd.val)))
+                        end
+                    else
+                        log.debug(util.c(log_tag, "unrecognized in-queue data ", cmd.key))
+                    end
+                elseif msg.qtype == mqueue.TYPE.COMMAND then
+                    log.debug(util.c(log_tag, "unrecognized in-queue command ", msg.message))
+                end
+            end
+
+            -- max 100ms spent processing queue
+            if util.time() - time_now > 100 then
+                log.warning(log_tag .. "exceeded 100ms queue process limit")
+                break
+            end
+        end
+
+        -- try to resend injection setpoint if needed
+        if self.resend_injection and self.injection_cmd ~= nil then
+            self.resend_injection = false
+            _set_injection_rate(self.injection_cmd)
+        end
+
+        time_now = util.time()
+
         if self.periodics.next_formed_req <= time_now then _request_formed(time_now) end
 
         if self.db.formed then

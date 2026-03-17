@@ -137,7 +137,8 @@ local UNIT_COMMAND = {
     ACK_ALL_ALARMS = 5,  -- ack all active alarms
     ACK_ALARM = 6,       -- ack a particular alarm
     RESET_ALARM = 7,     -- reset a particular alarm
-    SET_GROUP = 8        -- assign this unit to a group
+    SET_GROUP = 8,       -- assign this unit to a group
+    SET_FUSION_INJ = 9   -- set the fusion reactor injection rate
 }
 
 comms.PROTOCOL = PROTOCOL

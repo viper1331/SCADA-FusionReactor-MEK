@@ -12,6 +12,9 @@ local Div             = require("graphics.elements.Div")
 local Rectangle       = require("graphics.elements.Rectangle")
 local TextBox         = require("graphics.elements.TextBox")
 
+local NumericSpinbox  = require("graphics.elements.controls.NumericSpinbox")
+local PushButton      = require("graphics.elements.controls.PushButton")
+
 local DataIndicator   = require("graphics.elements.indicators.DataIndicator")
 local HorizontalBar   = require("graphics.elements.indicators.HorizontalBar")
 local PowerIndicator  = require("graphics.elements.indicators.PowerIndicator")
@@ -55,9 +58,12 @@ local reactor_states_fr = states_fr(style.reactor.states, {
 ---@param parent Container parent
 ---@param id integer
 local function init(parent, id)
+    local s_hi_box = style.theme.highlight_box
     local s_field = style.theme.field_box
     local text_fg = style.theme.text_fg
     local lu_col = style.lu_colors
+    local arrow_fg_bg = cpair(style.theme.label, s_hi_box.bkg)
+    local dis_colors = style.dis_colors
 
     local db   = ioctl.get_db()
     local unit = db.units[id]
@@ -132,16 +138,8 @@ local function init(parent, id)
     local summary = Rectangle{parent=main,border=border(1,colors.gray,true),thin=true,width=78,height=27,x=2,y=25}
 
     local rad = RadIndicator{parent=summary,x=2,y=2,label="Radiation Unite",format="%9.3f",lu_colors=lu_col,width=17,fg_bg=s_field}
-    local auto_grp = TextBox{parent=summary,x=2,y=5,text="Manuel",width=16,fg_bg=s_field}
 
     rad.register(u_ps, "radiation", rad.update)
-    auto_grp.register(u_ps, "auto_group", function (value)
-        if value == "Manual" then
-            auto_grp.set_value("Manuel")
-        else
-            auto_grp.set_value(value)
-        end
-    end)
 
     TextBox{parent=summary,x=22,y=2,text="Etat Fusion",width=16,fg_bg=text_fg}
     local fusion_state = StateIndicator{parent=summary,x=22,y=3,states=fusion_states_fr,value=1,min_width=16}
@@ -152,8 +150,29 @@ local function init(parent, id)
     fission_state.register(u_ps, "computed_status", fission_state.update)
 
     TextBox{parent=summary,x=2,y=9,text="Groupe Auto",width=11,fg_bg=style.label}
-    TextBox{parent=summary,x=2,y=12,text="Les details fusion sont en lecture seule dans cette vue.",fg_bg=text_fg}
-    TextBox{parent=summary,x=2,y=13,text="Utilisez le configurateur RTU/PLC pour la logique de controle.",fg_bg=text_fg}
+    local auto_mode = TextBox{parent=summary,x=2,y=10,text="Manuel",width=16,fg_bg=s_field}
+    auto_mode.register(u_ps, "auto_group", function (value)
+        if value == "Manual" then
+            auto_mode.set_value("Manuel")
+        else
+            auto_mode.set_value(value)
+        end
+    end)
+
+    TextBox{parent=summary,x=2,y=12,text="Commande Injection",width=17,fg_bg=style.label}
+
+    local inj_control = Div{parent=summary,x=2,y=13,width=20,height=4,fg_bg=s_hi_box}
+    local inj_cmd = NumericSpinbox{parent=inj_control,x=2,y=1,whole_num_precision=4,fractional_precision=0,min=0,arrow_fg_bg=arrow_fg_bg,arrow_disable=style.theme.disabled}
+    TextBox{parent=inj_control,x=9,y=2,text="mB/t",fg_bg=style.theme.label_fg}
+
+    local set_inj = function () unit.set_fusion_injection(inj_cmd.get_value()) end
+    local set_inj_btn = PushButton{parent=inj_control,x=14,y=2,text="SET",min_width=5,fg_bg=cpair(colors.black, colors.yellow),active_fg_bg=style.wh_gray,dis_fg_bg=dis_colors,callback=set_inj}
+
+    inj_cmd.register(f_ps, "injection_rate", function (rate)
+        if type(rate) == "number" then inj_cmd.set_value(math.floor(rate + 0.5)) end
+    end)
+    inj_cmd.register(f_ps, "formed", function (formed) if formed then inj_cmd.enable() else inj_cmd.disable() end end)
+    set_inj_btn.register(f_ps, "formed", function (formed) if formed then set_inj_btn.enable() else set_inj_btn.disable() end end)
 
     return main
 end

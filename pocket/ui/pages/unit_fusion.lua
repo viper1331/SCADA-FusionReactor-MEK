@@ -16,6 +16,8 @@ local TextBox        = require("graphics.elements.TextBox")
 
 local PushButton     = require("graphics.elements.controls.PushButton")
 
+local NumberField    = require("graphics.elements.form.NumberField")
+
 local DataIndicator  = require("graphics.elements.indicators.DataIndicator")
 local IconIndicator  = require("graphics.elements.indicators.IconIndicator")
 local PowerIndicator = require("graphics.elements.indicators.PowerIndicator")
@@ -35,11 +37,13 @@ local grn_ind_s = style.icon_states.grn_ind_s
 ---@param u_page nav_tree_page
 ---@param panes Div[]
 ---@param fus_pane Div
+---@param unit_id integer unit ID
 ---@param f_id integer fusion reactor ID
 ---@param ps psil
 ---@param update function
-return function (app, u_page, panes, fus_pane, f_id, ps, update)
+return function (app, u_page, panes, fus_pane, unit_id, f_id, ps, update)
     local db = ioctl.get_db()
+    local unit = db.units[unit_id]
 
     local fus_div = Div{parent=fus_pane,x=2,width=fus_pane.get_width()-2}
     table.insert(panes, fus_div)
@@ -91,6 +95,22 @@ return function (app, u_page, panes, fus_pane, f_id, ps, update)
     prod_rate.register(ps, "prod_rate", prod_rate.update)
     passive_gen.register(ps, "passive_generation", function (val) passive_gen.update(db.energy_convert(val)) end)
     inject_r.register(ps, "injection_rate", inject_r.update)
+
+    TextBox{parent=fus_div,text="Set Inject",y=17,width=10,fg_bg=label}
+    local inject_cmd = NumberField{parent=fus_div,x=10,y=17,width=5,default=0,min=0,max_frac_digits=0,max_chars=5,allow_decimal=false,align_right=true,fg_bg=style.field,dis_fg_bg=style.field_disable}
+    local set_inject = function ()
+        if unit ~= nil then
+            local rate = inject_cmd.get_numeric() or 0
+            unit.set_fusion_injection(rate)
+        end
+    end
+    local set_inject_btn = PushButton{parent=fus_div,x=16,y=17,text="SET",min_width=5,fg_bg=cpair(colors.green,colors.black),active_fg_bg=cpair(colors.white,colors.black),dis_fg_bg=style.btn_disable,callback=set_inject}
+
+    inject_cmd.register(ps, "injection_rate", function (v)
+        if type(v) == "number" then inject_cmd.set_value(math.floor(v + 0.5)) end
+    end)
+    inject_cmd.register(ps, "formed", function (formed) if formed then inject_cmd.enable() else inject_cmd.disable() end end)
+    set_inject_btn.register(ps, "formed", function (formed) if formed then set_inject_btn.enable() else set_inject_btn.disable() end end)
 
     local fus_ext_div = Div{parent=fus_pane,x=2,width=fus_pane.get_width()-2}
     table.insert(panes, fus_ext_div)
