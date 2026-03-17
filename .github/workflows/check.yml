@@ -1,0 +1,29 @@
+name: Lua Checks
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - devel
+  pull_request:
+    branches:
+      - main
+      - devel
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: Luacheck
+        uses: lunarmodules/luacheck@v1.1.0
+        with:
+          # Argument Explanations
+          # -i 121 = Setting a read-only global variable
+          #    512 = Loop can be executed at most once
+          #    542 = An empty if branch
+          # --no-max-line-length = Disable warnings for long line lengths
+          # --exclude-files ...  = Exclude lockbox library (external) and config files
+          # --globals ...        = Override all globals overridden in .vscode/settings.json AND 'os' since CraftOS 'os' differs from Lua's 'os'
+          args: . --no-max-line-length -i 121 512 542 --exclude-files ./lockbox/* --globals os _HOST bit colors fs http keys parallel periphemu peripheral read rs settings shell term textutils window

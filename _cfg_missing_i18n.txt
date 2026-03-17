@@ -1,0 +1,509 @@
+  \x04 validated
+  \x13 invalid, please re-config later
+  \x13 not connected, please re-config later
+  \x1a 
+ (for 
+ \x07 
+ \x07 unit %d - %d boiler%s, %d turbine%s, %s
+ \x07 unit %d - %s
+ bundle...
+ bundled, which will not work
+ connected...
+ connections
+ for the facility.
+ for the facility. There must only be one of these across all the RTUs you have.
+ input...
+ must be a table.
+ OK 
+ port          side/color       unit/facility
+ unique...
+ valid...
+ will be connected to...
+!! CAUTION !!
+(Normal) Digital Input: On if there is a redstone signal, off otherwise\nInverted Digital Input: On without a redstone signal, off otherwise
+(Normal) Digital Output: Redstone signal to 'turn it on', none to 'turn it off'\nInverted Digital Output: No redstone signal to 'turn it on', redstone signal to 'turn it off'
+(required for Pocket)
+/log.txt
+/reactor-plc.settings
+/reactor-plc/config.lua
+/rtu.settings
+/rtu/config.lua
+/supervisor.settings
+/supervisor/config.lua
+@ local
+[CRD_CHANNEL]
+[in]
+[missing]
+[n/a]
+[out]
+[PKT_CHANNEL]
+[PLC_CHANNEL]
+[RTU_CHANNEL]
+[SVR_CHANNEL]
+\n\n
+\x1a
+\x1b
+\x8c
+\x8c\x8c\x8c\x8c
+\x8c\x8c\x8c\x9c
+\x8c\x8c\x8c\x9c\x8c
+\x95\n\x8d
+\x95\n\x95
+\x95\n\x9d
+<disconnected> (connect to edit)
+<not set>
+> check 
+> check configuration...
+> check fission reactor connected...
+> check fission reactor formed...
+> check for no more than one reactor...
+> check gateway configuration...
+> check redstone 
+> check wired comms modem connected...
+> check wired supervisor connection...
+> check wireless supervisor connection...
+> check wireless/ender modem connected...
+> checking redstone @ 
+> no modem, can't test supervisor connection
+> SELECT
+>ALL_WASTE
+a Facility Tank
+a unit).
+About
+Accessibility
+Add +
+Added advanced option to invert digital redstone signals
+Added blue indicator color modes
+Added color accessibility modes
+Added front panel UI theme
+Added option for allowing Pocket connections
+Added option for allowing Pocket test commands
+Added option for fast burn rate ramping in automatic control modes
+Added option to invert emergency coolant redstone control
+Added sodium emergency coolant option
+Added standard with black off state color mode
+Added support for redstone relays
+Added support for wired communications modems
+Afterwards, either (a) edit then save entries for currently disconnected devices to properly configure or (b) delete those entries.
+Alternatively, you can configure them as facility tanks to connect to multiple reactor units. These can intermingle with unit-specific tanks.
+analog input 
+Analog Input: 0-15 redstone power level input\nAnalog Output: 0-15 scaled redstone power level output
+analog output 
+another reactor PLC is connected with this reactor unit ID
+append
+Apply
+AuthKey
+AuthKey minimum length is now 8 (if set)
+Auxiliary Water Coolant
+Auxiliary water coolant can be enabled for units to provide extra water during turbine ramp-up. For water cooled reactors, this goes to the reactor. For sodium cooled reactors, water goes to the boiler.
+AuxiliaryCoolant
+back
+Bad
+Black
+Blue
+boilerValve
+Both
+bottom
+Bottom
+Brown
+bundled entry(s) but this entry is not
+Bundled Redstone Configuration
+Cancel
+char
+Charge control provides automatic control to maintain an induction matrix charge level. In order to have smoother control, reactors that were activated will be held on at 0.01 mB/t for a short period before allowing them to turn off. This minimizes overshooting the charge target.
+Click 'Accessibility' below to access colorblind assistive options.
+ColorMode
+CONFIG
+configuration invalid, please re-configure peripheral entry
+configuration invalid, please re-configure redstone entry
+configurator error: 
+Configure this computer or a redstone relay.
+Configuring peripheral on '
+Confirm
+conn_test_complete
+connected to facility tank 
+connected to its unit tank (
+Connected to: 
+Connected to: Unit 
+connecting it to peripherals will cause issues
+ConnTimeout
+ConnTimeout can now have a fractional part
+Cooling Configuration
+Cooling configuration for unit 
+Cooling configuration table length must match the number of units.
+CoolingConfig
+Coordinator Channel
+Coordinator Timeout
+CRD_Channel
+CRD_Listen
+CRD_Timeout
+Create all 4 waste entries
+Cyan
+DELETE
+Digital I/O is already inverted (or not) based on intended use. If you have a non-standard setup, you can use this option to avoid needing a redstone inverter.
+digital input 
+digital output 
+Done
+Don't show this warning again
+double_click
+dynamicValve
+Each of the 5 uniquely named channels must be the same for each device in this SCADA network. For multiplayer servers, it is recommended to not use the default channels.
+Each of the 5 uniquely named channels, including the 2 below, must be the same for each device in this SCADA network. For multiplayer servers, it is recommended to not use the default channels.
+Each reactor unit can have at most 1 tank and the facility can have at most 4. Each facility tank must have a unique # 1 through 4, regardless of where it is connected. Only a total of 4 tanks can be displayed on the flow monitor.
+Each unit can have at most 2 boilers. Boiler #1 shows up first on the main display, followed by boiler #2 below it. The numberings are per unit (unit 1 and unit 2 would both have a boiler #1 if each had one boiler) and can be split amongst multiple RTUs (one has #1, another has #2).
+Each unit can have at most 3 turbines. Turbine #1 shows up first on the main display, followed by #2 then #3 below it. The numberings are per unit (unit 1 and unit 2 would both have a turbine #1) and can be split amongst multiple RTUs (one has #1, another has #2).
+EDIT
+Editing 
+EmerCoolColor
+EmerCoolEnable
+EmerCoolInvert
+EmerCoolSide
+Emergency Coolant Redstone Output Side
+Enable Extended Idling
+Enable Fast Ramping
+Enable PLC Emergency Coolant Control
+Enable Pocket Access
+Enable Pocket Remote System Testing
+ensure the fission reactor multiblock is formed
+environment_detector
+environmentDetector
+error: didn't get an establish reply from supervisor
+error: invalid reply from supervisor
+error: invalid reply length from supervisor
+error: supervisor connection denied
+error: unknown receive channel
+Examples: A U2 tank should be configured on an RTU as the dynamic tank for unit #2. An F3 tank should be configured on an RTU as the #3 dynamic tank for the facility.
+ExtChargeIdling
+Extended Charge Idling
+facility
+Facility Acknowledge
+Facility Alarm (any)
+Facility Alarm (high prio)
+Facility SCRAM
+Facility Tank 
+Facility Tank Connections
+Facility Tank Definitions
+Facility tank definitions table length must match the number of units when using facility tanks.
+Facility Tank List
+Facility Tank Mode
+Facility Tanks             Unit Tanks
+FacilityTankConns
+FacilityTankDefs
+FacilityTankList
+FacilityTankMode
+Fast ramping has an increased risk of your reactor running low on coolant and overheating. First test this under supervision, as an insufficient cooling setup or lack of auxiliary coolant can cause the reactor to ramp faster than your turbine(s)/boiler(s) can handle.
+FastRamp
+FastRampConfirmed
+fissionReactorLogicAdapter
+for the facility
+for unit 
+front
+Front
+FrontPanelTheme
+go through Configure Gateway and apply settings to set any missing settings and repair any corrupted ones
+go through Configure System and apply settings to set any missing settings and repair any corrupted ones
+Good
+graphics.core
+graphics.elements.controls.Checkbox
+graphics.elements.controls.PushButton
+graphics.elements.controls.Radio2D
+graphics.elements.controls.RadioButton
+graphics.elements.DisplayBox
+graphics.elements.Div
+graphics.elements.form.NumberField
+graphics.elements.form.TextField
+graphics.elements.indicators.IndicatorLight
+graphics.elements.ListBox
+graphics.elements.MultiPane
+graphics.elements.TextBox
+graphics.themes
+Gray
+Green
+Has Auxiliary Coolant
+has tank conn
+Here you can select the color theme for the front panel.
+Hide
+Home
+If it still does not show, it may not be compatible. Currently only Boilers, Turbines, Dynamic Tanks, SNAs, SPSs, Induction Matricies, and Environment Detectors are supported.
+If this is a networked PLC, currently only IDs 1 through 4 are acceptable.
+If you already configured your coordinator, make sure you update the coordinator's configured unit count.
+If you didn't mean to enable this, go back.
+If you have a supervisor, select the box. You will later be prompted to select the network configuration. If you instead want to use this as a standalone safety system, don't select the box.
+In nearly all cases, the automatic SCRAM will still prevent a meltdown if coolant was not lost.
+Index must be 1 or 2.
+Index must be 1, 2, or 3.
+Index must be greater than 0.
+Index must be within 1 to 4.
+induction matrix
+Induction Matrix < 
+Induction Matrix > 
+Induction Matrix Charge %
+inductionPort
+Input Side
+invalid peripheral type after type validation
+Invalid tank mode present in config. FAC_TANK_MODE must be a number 0 through 8.
+Invert
+inverted 
+Is Bundled?
+Is Connected
+its own Unit Tank
+key
+key_up
+Left
+left
+Light Blue
+Light Gray
+Lime
+local
+LogDebug
+LogMode
+LogPath
+Magenta
+Make sure your device is either touching the RTU or connected via wired modems. There should be a wired modem on a side of the RTU then one on the device, connected by a cable. The modem on the device needs to be right clicked to connect it (which will turn its border red), at which point the peripheral name will be shown in the chat.
+Make sure your relay is either touching the RTU gateway or connected via wired modems. There should be a wired modem on a side of the RTU gateway then one on the device, connected by a cable. The modem on the device needs to be right clicked to connect it (which will turn its border red), at which point the peripheral name will be shown in the chat.
+make sure your supervisor is running, listening on the wired interface, the wire is intact, and your channels are correct
+make sure your supervisor is running, listening on the wireless interface, your channels are correct, trusted ranges are set properly (if enabled), facility keys match (if set), and if you are using wireless modems rather than ender modems, that your devices are close together in the same dimension
+Manual +
+Mode 1
+Mode 2
+Mode 3
+Mode 4
+Mode 5
+Mode 6
+Mode 7
+Mode 8
+modem_message
+mouse_click
+mouse_drag
+mouse_scroll
+mouse_up
+New +
+nil
+no auxiliary coolant
+no emergency coolant tanks
+no facility tanks
+no tank (as you set two steps ago)
+no tank conn
+non-bundled entry(s) but this entry is
+not connected to a tank
+Note: alarm sine waves are at half scale so that multiple will be required to reach full scale.
+Note: exact color varies by theme.
+number
+Number of Reactors
+Off
+OFFLINE
+ONLINE
+only one port should be set to a side/color combination
+Optionally, set the facility authentication key below. Do NOT use one of your passwords.
+Orange
+Output Side
+PASS
+paste
+peripheral
+Peripheral Name
+peripheral_detach
+Peripherals
+Pink
+PKT_Channel
+PKT_Timeout
+PLC Timeout
+PLC_Channel
+PLC_Listen
+PLC_Timeout
+Please assign device connection interfaces if you selected multiple network interfaces.
+please connect an ender or wireless modem for wireless comms
+please connect the reactor PLC to the reactor's fission reactor logic adapter
+please connect the wired comms modem 
+please connect this device via a wired modem or direct contact and ensure the configuration matches what it connects as
+Please provide the reactor cooling configuration below. This includes the number of turbines, boilers, and if that reactor has a connection to a dynamic tank for emergency coolant.
+Please select your dynamic tank layout.
+Please set unit connections to dynamic tanks, selecting at least one facility tank. The layout for facility tanks will be configured next.
+PocketEnabled
+PocketTest
+PreferWireless
+Preview
+Purple
+Reactor Active
+Reactor Enable
+Reactor in Auto Control
+reactor PLC comms version does not match supervisor comms version, make sure both devices are up-to-date (ccmsi update)
+Reactor PLC\nRTU Gateway\nCoordinator
+Reactor RPS Reset
+Reactor SCRAM
+reactor unit #
+reactor-plc.config
+reactor-plc.config.check
+reactor-plc.config.system
+reactor-plc.plc
+reactors
+Red
+Redstone
+Redstone Relay
+redstone_relay
+reinforcedInductionPort
+Remember to configure any peripherals or redstone that you have connected to this RTU gateway if you have not already done so, or if you have added, removed, or modified any of them.
+Re-organized peripheral configuration UI, resulting in some input fields being re-ordered
+replace
+Right
+right
+RPS Auto SCRAM
+RPS Excess Heated Coolant
+RPS Excess Waste
+RPS High Damage
+RPS High Temperature
+RPS Insufficient Fuel
+RPS Low Coolant
+RPS PLC Fault
+RPS Supervisor Timeout
+RPS Tripped
+RTU Gateway Channel
+RTU gateway comms version does not match supervisor comms version, make sure both devices are up-to-date (ccmsi update)
+RTU Gateway Timeout
+rtu.config
+rtu.config.check
+rtu.config.peripherals
+rtu.config.redstone
+rtu.config.system
+rtu.rtu
+RTU_Channel
+RTU_Listen
+RTU_Timeout
+scada-common.comms
+scada-common.constants
+scada-common.log
+scada-common.network
+scada-common.ppm
+scada-common.rsio
+scada-common.tcd
+scada-common.types
+scada-common.util
+seconds\nseconds\nseconds\nseconds
+SELECT
+Setting this to a value larger than 0 prevents wireless connections with devices that many meters (blocks) away in any direction.
+Slow ramping is always used up to 40 mB/t, which is ~5 mB/t per second. If you enable fast ramping, it will then hold at 40 mB/t until cooled coolant stabilizes (at least 2 seconds) then increase to a faster ramp rate, which is a percentage of the maximum burn rate.
+sodium
+Sodium
+solarNeutronActivator
+Some modes may look the same if you are not using 4 total reactor units. The wiki has details. Modes that look the same will function the same.
+Speakers can be connected to this RTU gateway without RTU unit configuration entries.
+SpeakerVolume
+Specify each tank's coolant type, for display use only. Water is the only option if one or more of the connected units is water cooled.
+SPS
+spsPort
+string
+Supervisor Channel
+supervisor.config
+supervisor.config.facility
+supervisor.config.system
+SVR_Channel
+table
+tank %s - %s
+Tank ?
+Tank F
+Tank F1
+Tank Fluid Types
+Tank U
+TankFluidTypes
+terminate
+the facility
+the facility).
+The following peripherals will be imported:
+The following redstone entries will be imported:
+The old config.lua file will now be deleted, then the configurator will exit.
+There can only be one of these devices per SCADA network, so it will be assigned as the sole 
+There is a problem with your config.lua file:
+there MUST be no more than one reactor connected, as a PLC uses the first one it finds, which may not always be the same one
+This allows remotely playing alarm sounds.
+This Computer
+This enables verifying that messages are authentic, so it is intended for wireless security on multiplayer servers. All devices on the same wireless network MUST use the same key if any device has a key. This does result in some extra computation (can slow things down).
+This feature is intended for advanced users. If you just can't see your device, click 'I don't see my device!' instead.
+This independent control can be used with or without a supervisor. To configure, you would next select the interface of the redstone output connected to one or more mekanism pipes.
+This is optional. You can disable this functionality by setting the value to 0.
+This is reactor unit #    's #     boiler.
+This is reactor unit #    's #     turbine.
+This is the 
+This is the below system's #     dynamic tank.
+This is the below system's #     env. detector.
+this one MUST ONLY connect to SCADA computers
+This results in much larger log files. It is best to only use this when there is a problem.
+This shortcut will add entries for each of the 4 waste outputs. If you select bundled, 4 colors will be assigned to the selected side. Otherwise, 4 default sides will be used.
+this side has 
+This SNA is for reactor unit #    .
+This system uses color heavily to distinguish ok and not, with some indicators using many colors. By selecting a mode below, indicators will change as shown. For non-standard modes, indicators with more than two colors will be split up.
+This visualization tool shows the pipe connections required for a particular dynamic tank configuration you have selected.
+timer
+Tip: you can run a Self-Check from the configurator home screen to make sure everything is going to work right!
+Top
+top
+tried to generate a summary without a phy set
+tried to save a redstone entry without a phy
+TrustedRange
+turbineValve
+unit 
+Unit 
+UNIT    TURBINES   BOILERS   HAS TANK CONNECTION?
+unit %d
+Unit 1\n\nUnit 2\n\nUnit 3\n\nUnit 4
+Unit Acknowledge
+Unit Alarm
+Unit Auxiliary Cool. Valve
+Unit Emergency Cool. Valve
+Unit ID invalid.
+Unit ID must be within 1 to 4.
+Unit Tank 
+UnitCount
+UnitID
+unrecognized device type
+Use Facility Dynamic Tanks
+Used
+v1.10.0
+v1.10.2
+v1.11.5
+v1.11.8
+v1.12.0
+v1.13.0
+v1.2.12
+v1.3.2
+v1.6.0
+v1.6.15
+v1.6.2
+v1.6.8
+v1.7.15
+v1.7.3
+v1.7.9
+v1.8.0
+v1.8.21
+v1.9.2
+Warning
+Warning!\n\nSome of the devices in your old config file aren't currently connected. If the device isn't connected, the options can't be properly validated. Please either connect your devices and try again or complete the import without validation on those entry's settings.
+Warning: too many devices on one RTU Gateway can cause lag. Note that 10x the \"PEAK\x1a\" rate on the flow monitor gives you the mB/t of waste that the SNA(s) can process. Enough SNAs to provide 2x to 3x of that unit's max burn rate should be a good margin to catch up after night or cloudy weather.
+Waste Antimatter Valve
+Waste Plutonium Valve
+Waste Po Pellets Valve
+Waste Polonium Valve
+Water
+water
+What's that?
+When fast ramping is used, if the reactor drops below 80% cooled coolant, it will scale back the ramping proportionally as the coolant level drops.
+When networked, the supervisor takes care of emergency coolant via RTUs. However, you can configure independent emergency coolant via the PLC.
+White
+Wired
+Wired Only
+WiredModem
+Wireless
+Wireless and Wired
+Wireless Only
+WirelessModem
+With a wireless modem, configure Pocket access.
+Yellow
+You already configured this input for this facility/unit assignment. There can only be one entry for each input per each unit or the facility (for facility inputs).\n\nPlease select a different port.
+You can change the speaker audio volume from the default. The range is 0.0 to 3.0, where 1.0 is standard volume.
+You can connect more than one environment detector for a particular unit or the facility. In that case, the maximum radiation reading from those assigned to that particular unit or the facility will be used for alarms and display.
+You can extend this to a full minute to minimize reactors flickering on/off, but there may be more overshoot of the target.
+you cannot have multiple of the same input for a given unit or the facility (
+You generally do not want or need to modify this. On slow servers, you can increase this to make the system wait longer before assuming a disconnection.
+You generally should not need to modify these. On slow servers, you can try to increase this to make the system wait longer before assuming a disconnection. The default for all is 5 seconds.
+You have set one or more of your units to use dynamic tanks for emergency coolant. You have two paths for configuration. The first is to assign dynamic tanks to reactor units; one tank per reactor, only connected to that reactor. RTU configurations must also assign it as such.
+You selected no facility tanks.
+You selected the 
+You selected the ALL_WASTE shortcut.

@@ -1,0 +1,29 @@
+2026-03-17 14:47:47 [INF] ========================================
+2026-03-17 14:47:47 [INF] BOOTING rtu.startup v1.13.12
+2026-03-17 14:47:47 [INF] ========================================
+2026-03-17 14:47:47 [INF] PPM: found a modem (left)
+2026-03-17 14:47:47 [INF] PPM: found a block_reader (block_reader_7)
+2026-03-17 14:47:47 [INF] PPM: found a mekanismgenerators:fusion_reactor_controller (mekanismgenerators:fusion_reactor_controller_3)
+2026-03-17 14:47:47 [INF] PPM: found a fusionReactorLogicAdapter (fusionReactorLogicAdapter_0)
+2026-03-17 14:47:47 [INF] PPM: found a block_reader (block_reader_2)
+2026-03-17 14:47:47 [INF] PPM: found a block_reader (block_reader_1)
+2026-03-17 14:47:47 [INF] PPM: found a computer (computer_3)
+2026-03-17 14:47:47 [INF] PPM: found a computer (computer_1)
+2026-03-17 14:47:47 [INF] PPM: found a laserAmplifier (laserAmplifier_1)
+2026-03-17 14:47:47 [INF] PPM: found a inductionPort (inductionPort_1)
+2026-03-17 14:47:47 [INF] PPM: found a redstone_relay (redstone_relay_1)
+2026-03-17 14:47:47 [INF] PPM: found a redstone_relay (redstone_relay_2)
+2026-03-17 14:47:47 [INF] PPM: found a laser (laser_0)
+2026-03-17 14:47:47 [INF] PPM: found a monitor (monitor_3)
+2026-03-17 14:47:47 [INF] PPM: found a monitor (monitor_2)
+2026-03-17 14:47:47 [INF] PPM: found a monitor (monitor_0)
+2026-03-17 14:47:47 [INF] PPM: found a redstone_relay (redstone_relay_0)
+2026-03-17 14:47:47 [INF] PPM: [@left] initialized previously undefined field isWireless()
+2026-03-17 14:47:47 [INF] PPM: [@left] initialized previously undefined field closeAll()
+2026-03-17 14:47:47 [INF] BKPLN: WIRED PHY_UP left
+2026-03-17 14:47:47 [INF] PPM: [@left] initialized previously undefined field open()
+2026-03-17 14:47:47 [INF] BKPLN: WIRELESS PHY_DOWN
+2026-03-17 14:47:47 [INF] PPM: [@inductionPort_1] initialized previously undefined field isFormed()
+2026-03-17 14:47:47 [INF] uinit> initialized RTU unit #1: inductionPort_1 (induction_matrix) for the facility
+2026-03-17 14:47:47 [INF] startup> completed
+2026-03-17 14:47:47 [INF] PPM: [@left] initialized previously undefined field transmit()

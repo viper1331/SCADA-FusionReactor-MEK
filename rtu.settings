@@ -1,0 +1,22 @@
+{
+  ConnTimeout = 5,
+  SVR_Channel = 16240,
+  Peripherals = {
+    {
+      name = "inductionPort_1",
+    },
+  },
+  LogPath = "/log.txt",
+  LogDebug = false,
+  ColorMode = 1,
+  FrontPanelTheme = 1,
+  SpeakerVolume = 1,
+  WiredModem = "left",
+  RTU_Channel = 16242,
+  LogMode = 0,
+  WirelessModem = true,
+  Redstone = {},
+  AuthKey = "",
+  TrustedRange = 0,
+  PreferWireless = true,
+}
