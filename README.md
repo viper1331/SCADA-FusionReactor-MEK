@@ -49,6 +49,13 @@ Utilisation de ce depot comme source d'installation :
 - Si vous copiez ce depot complet sur un PC ComputerCraft et lancez `ccmsi`, l'installateur utilise automatiquement les fichiers locaux du depot (`install_manifest.json` + arborescence projet).
 - Pour forcer une source distante personnalisee (fork), creez `ccmsi_source.lua` a partir de `ccmsi_source.example.lua`.
 
+## Wiki FR detaille
+
+Un wiki complet en francais est disponible dans le depot :
+- [Accueil wiki FR](wiki/fr/README.md)
+- [Integration Fusion Mekanism](wiki/fr/04-integration-fusion-mekanism.md)
+- [Tests et depannage](wiki/fr/06-tests-validation-depannage.md)
+
 ## Contributions
 
 Merci de me contacter via Discord, email, ou GitHub si vous envisagez une contribution.
