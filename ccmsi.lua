@@ -728,6 +728,7 @@ if #opts == 0 or opts[1] == "help" then
     yellow();println("<app>");lgray()
     println(" reactor-plc")
     println(" rtu")
+    println(" rtu-fusion")
     println(" supervisor")
     println(" coordinator")
     println(" pocket")
@@ -748,6 +749,7 @@ if #opts == 0 or opts[1] == "help" then
     white();println("<app>");lgray()
     println(" reactor-plc - reactor PLC firmware")
     println(" rtu         - RTU firmware")
+    println(" rtu-fusion  - alias for RTU firmware (fusion setup)")
     println(" supervisor  - supervisor server application")
     println(" coordinator - coordinator application")
     println(" pocket      - pocket application")
@@ -767,7 +769,12 @@ else
 
     local next_opt = 3
     local apps = { "reactor-plc", "rtu", "supervisor", "coordinator", "pocket", "installer" }
-    app = get_opt(opts[2], apps)
+    local app_inputs = { "reactor-plc", "rtu", "rtu-fusion", "supervisor", "coordinator", "pocket", "installer" }
+
+    app = get_opt(opts[2], app_inputs)
+    if app == "rtu-fusion" then
+        app = "rtu"
+    end
     if app == nil then
         for _, a in pairs(apps) do
             if fs.exists(a) and fs.isDir(a) then
