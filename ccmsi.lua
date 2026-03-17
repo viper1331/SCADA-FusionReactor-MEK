@@ -18,8 +18,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 local CCMSI_VERSION = "v1.21"
 
 local install_dir = "/.install-cache"
-local default_manifest_path = "https://mikaylafischler.github.io/cc-mek-scada/manifests/"
-local default_repo_path = "https://raw.githubusercontent.com/MikaylaFischler/cc-mek-scada/"
+local default_manifest_path = "https://raw.githubusercontent.com/viper1331/SCADA-FusionReactor-MEK/"
+local default_repo_path = "https://raw.githubusercontent.com/viper1331/SCADA-FusionReactor-MEK/"
 local manifest_path = default_manifest_path
 local repo_path = default_repo_path
 local install_manifest = manifest_path .. "main/install_manifest.json"
