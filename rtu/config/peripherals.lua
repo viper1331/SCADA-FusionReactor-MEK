@@ -80,7 +80,7 @@ function peripherals.create(tool_ctl, main_pane, cfg_sys, peri_cfg, style)
 
     local peri_pane = MultiPane{parent=peri_cfg,y=4,panes={peri_c_1,peri_c_2,peri_c_3,peri_c_4,peri_c_5,peri_c_6,peri_c_7}}
 
-    TextBox{parent=peri_cfg,y=2,text=" Peripheral Connections",fg_bg=cpair(colors.black,colors.purple)}
+    TextBox{parent=peri_cfg,y=2,text=" Connexions peripheriques",fg_bg=cpair(colors.black,colors.purple)}
 
     local peri_list = ListBox{parent=peri_c_1,y=1,height=12,width=49,scroll_height=1000,fg_bg=bw_fg_bg,nav_fg_bg=g_lg_fg_bg,nav_active=cpair(colors.black,colors.gray)}
 
@@ -105,22 +105,22 @@ function peripherals.create(tool_ctl, main_pane, cfg_sys, peri_cfg, style)
         end
     end
 
-    PushButton{parent=peri_c_1,y=14,text="\x1b Back",callback=function()main_pane.set_value(1)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
-    local peri_revert_btn = PushButton{parent=peri_c_1,x=8,y=14,min_width=16,text="Revert Changes",callback=peri_revert,fg_bg=cpair(colors.black,colors.yellow),active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
-    PushButton{parent=peri_c_1,x=35,y=14,min_width=7,text="Add +",callback=function()peri_pane.set_value(2)end,fg_bg=cpair(colors.black,colors.blue),active_fg_bg=btn_act_fg_bg}
-    local peri_apply_btn = PushButton{parent=peri_c_1,x=43,y=14,min_width=7,text="Apply",callback=peri_apply,fg_bg=cpair(colors.black,colors.green),active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
+    PushButton{parent=peri_c_1,y=14,text="\x1b Retour",callback=function()main_pane.set_value(1)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
+    local peri_revert_btn = PushButton{parent=peri_c_1,x=8,y=14,min_width=16,text="Annuler modifs",callback=peri_revert,fg_bg=cpair(colors.black,colors.yellow),active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
+    PushButton{parent=peri_c_1,x=31,y=14,min_width=9,text="Ajouter +",callback=function()peri_pane.set_value(2)end,fg_bg=cpair(colors.black,colors.blue),active_fg_bg=btn_act_fg_bg}
+    local peri_apply_btn = PushButton{parent=peri_c_1,x=41,y=14,min_width=9,text="Appliquer",callback=peri_apply,fg_bg=cpair(colors.black,colors.green),active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
 
-    TextBox{parent=peri_c_2,y=1,text="Select one of the below devices to use."}
+    TextBox{parent=peri_c_2,y=1,text="Selectionnez un des appareils ci-dessous."}
 
     self.ppm_devs = ListBox{parent=peri_c_2,y=3,height=10,width=49,scroll_height=1000,fg_bg=bw_fg_bg,nav_fg_bg=g_lg_fg_bg,nav_active=cpair(colors.black,colors.gray)}
 
-    PushButton{parent=peri_c_2,y=14,text="\x1b Back",callback=function()peri_pane.set_value(1)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
-    PushButton{parent=peri_c_2,x=8,y=14,min_width=10,text="Manual +",callback=function()peri_pane.set_value(3)end,fg_bg=cpair(colors.black,colors.orange),active_fg_bg=btn_act_fg_bg}
-    PushButton{parent=peri_c_2,x=26,y=14,min_width=24,text="I don't see my device!",callback=function()peri_pane.set_value(7)end,fg_bg=cpair(colors.black,colors.yellow),active_fg_bg=btn_act_fg_bg}
+    PushButton{parent=peri_c_2,y=14,text="\x1b Retour",callback=function()peri_pane.set_value(1)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
+    PushButton{parent=peri_c_2,x=8,y=14,min_width=10,text="Manuel +",callback=function()peri_pane.set_value(3)end,fg_bg=cpair(colors.black,colors.orange),active_fg_bg=btn_act_fg_bg}
+    PushButton{parent=peri_c_2,x=22,y=14,min_width=28,text="Je ne vois pas mon appareil !",callback=function()peri_pane.set_value(7)end,fg_bg=cpair(colors.black,colors.yellow),active_fg_bg=btn_act_fg_bg}
 
-    TextBox{parent=peri_c_7,y=1,height=10,text="Make sure your device is either touching the RTU or connected via wired modems. There should be a wired modem on a side of the RTU then one on the device, connected by a cable. The modem on the device needs to be right clicked to connect it (which will turn its border red), at which point the peripheral name will be shown in the chat."}
-    TextBox{parent=peri_c_7,y=9,height=4,text="If it still does not show, it may not be compatible. Currently only Boilers, Turbines, Dynamic Tanks, Fusion Reactors, SNAs, SPSs, Induction Matricies, and Environment Detectors are supported."}
-    PushButton{parent=peri_c_7,y=14,text="\x1b Back",callback=function()peri_pane.set_value(2)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
+    TextBox{parent=peri_c_7,y=1,height=10,text="Assurez-vous que votre appareil touche le RTU ou est relie via des modems cables. Il doit y avoir un modem cable sur un cote du RTU et un sur l'appareil, relies par un cable. Le modem de l'appareil doit etre clique droit pour se connecter (bordure rouge), puis le nom du peripherique apparait dans le chat."}
+    TextBox{parent=peri_c_7,y=9,height=4,text="S'il n'apparait toujours pas, il peut etre incompatible. Actuellement, seuls les chaudieres, turbines, reservoirs dynamiques, reacteurs fusion, SNA, SPS, matrices d'induction et detecteurs d'environnement sont pris en charge."}
+    PushButton{parent=peri_c_7,y=14,text="\x1b Retour",callback=function()peri_pane.set_value(2)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
 
     local new_peri_attrs = { "", "" }
     local function new_peri(name, type)
@@ -128,7 +128,7 @@ function peripherals.create(tool_ctl, main_pane, cfg_sys, peri_cfg, style)
         self.peri_cfg_editing = false
 
         self.p_err.hide(true)
-        self.p_name_msg.set_value("Configuring peripheral on '" .. name .. "':")
+        self.p_name_msg.set_value("Configuration du peripherique sur '" .. name .. "':")
         self.p_desc_ext.set_value("")
 
         local function reposition(prompt, idx_x, idx_max, unit_x, unit_y, desc_y)
@@ -144,25 +144,25 @@ function peripherals.create(tool_ctl, main_pane, cfg_sys, peri_cfg, style)
         end
 
         if type == "boilerValve" then
-            reposition("This is reactor unit #    's #     boiler.", 31, 2, 23, 4, 7)
+            reposition("Ceci est la chaudiere #     de l unite reacteur #    .", 31, 2, 23, 4, 7)
             self.p_assign_btn.hide(true)
-            self.p_desc.set_value("Each unit can have at most 2 boilers. Boiler #1 shows up first on the main display, followed by boiler #2 below it. The numberings are per unit (unit 1 and unit 2 would both have a boiler #1 if each had one boiler) and can be split amongst multiple RTUs (one has #1, another has #2).")
+            self.p_desc.set_value("Chaque unite peut avoir au plus 2 chaudieres. La chaudiere #1 apparait en premier sur l ecran principal, suivie de la #2 en dessous. La numerotation est par unite (l unite 1 et l unite 2 peuvent chacune avoir une chaudiere #1) et peut etre repartie sur plusieurs RTU (une a #1, une autre a #2).")
         elseif type == "turbineValve" then
-            reposition("This is reactor unit #    's #     turbine.", 31, 3, 23, 4, 7)
+            reposition("Ceci est la turbine #     de l unite reacteur #    .", 31, 3, 23, 4, 7)
             self.p_assign_btn.hide(true)
-            self.p_desc.set_value("Each unit can have at most 3 turbines. Turbine #1 shows up first on the main display, followed by #2 then #3 below it. The numberings are per unit (unit 1 and unit 2 would both have a turbine #1) and can be split amongst multiple RTUs (one has #1, another has #2).")
+            self.p_desc.set_value("Chaque unite peut avoir au plus 3 turbines. La turbine #1 apparait en premier sur l ecran principal, suivie de la #2 puis de la #3 en dessous. La numerotation est par unite (l unite 1 et l unite 2 peuvent chacune avoir une turbine #1) et peut etre repartie sur plusieurs RTU (une a #1, une autre a #2).")
         elseif type == "fusionReactorController" or type == "fusionReactorPort" then
-            reposition("This is reactor unit #    's fusion reactor.", 46, 1, 23, 4, 7)
+            reposition("Ceci est le reacteur fusion de l unite reacteur #    .", 46, 1, 23, 4, 7)
             self.p_idx.hide()
             self.p_assign_btn.hide(true)
-            self.p_desc.set_value("Each reactor unit can have one fusion reactor connection. You can use either a Fusion Reactor Controller or a Fusion Reactor Port.")
+            self.p_desc.set_value("Chaque unite reacteur peut avoir une connexion reacteur fusion. Vous pouvez utiliser un Fusion Reactor Controller ou un Fusion Reactor Port.")
         elseif type == "solarNeutronActivator" then
-            reposition("This SNA is for reactor unit #    .", 46, 1, 31, 4, 7)
+            reposition("Ce SNA est pour l unite reacteur #    .", 46, 1, 31, 4, 7)
             self.p_idx.hide()
             self.p_assign_btn.hide(true)
-            self.p_desc_ext.set_value("Warning: too many devices on one RTU Gateway can cause lag. Note that 10x the \"PEAK\x1a\" rate on the flow monitor gives you the mB/t of waste that the SNA(s) can process. Enough SNAs to provide 2x to 3x of that unit's max burn rate should be a good margin to catch up after night or cloudy weather.")
+            self.p_desc_ext.set_value("Avertissement: trop d appareils sur une passerelle RTU peuvent provoquer du lag. Notez que 10x le taux \"PIC\x1a\" du moniteur de flux donne le mB/t de dechets que les SNA peuvent traiter. Avoir assez de SNA pour fournir 2x a 3x le debit de combustion max de l unite laisse une bonne marge pour rattraper la nuit ou un temps nuageux.")
         elseif type == "dynamicValve" then
-            reposition("This is the below system's #     dynamic tank.", 29, 4, 17, 6, 8)
+            reposition("Ceci est le reservoir dynamique #     du systeme ci-dessous.", 29, 4, 17, 6, 8)
             self.p_assign_btn.show()
             self.p_assign_btn.redraw()
 
@@ -175,21 +175,21 @@ function peripherals.create(tool_ctl, main_pane, cfg_sys, peri_cfg, style)
                 self.p_unit.enable()
             end
 
-            self.p_desc.set_value("Each reactor unit can have at most 1 tank and the facility can have at most 4. Each facility tank must have a unique # 1 through 4, regardless of where it is connected. Only a total of 4 tanks can be displayed on the flow monitor.")
+            self.p_desc.set_value("Chaque unite reacteur peut avoir au plus 1 reservoir et l installation au plus 4. Chaque reservoir d installation doit avoir un numero unique de 1 a 4, quel que soit l endroit ou il est connecte. Seuls 4 reservoirs au total peuvent etre affiches sur le moniteur de flux.")
         elseif type == "environmentDetector" or type == "environment_detector" then
-            reposition("This is the below system's #     env. detector.", 29, 99, 17, 6, 8)
+            reposition("Ceci est le detecteur env. #     du systeme ci-dessous.", 29, 99, 17, 6, 8)
             self.p_assign_btn.show()
             self.p_assign_btn.redraw()
             if self.p_assign_btn.get_value() == 1 then self.p_unit.disable() else self.p_unit.enable() end
-            self.p_desc.set_value("You can connect more than one environment detector for a particular unit or the facility. In that case, the maximum radiation reading from those assigned to that particular unit or the facility will be used for alarms and display.")
+            self.p_desc.set_value("Vous pouvez connecter plus d un detecteur d environnement pour une unite donnee ou l installation. Dans ce cas, la lecture de radiation maximale de ceux affectes a cette unite ou a l installation sera utilisee pour les alarmes et l affichage.")
         elseif type == "inductionPort" or type == "reinforcedInductionPort" or type == "spsPort" then
-            local dev = tri(type == "inductionPort" or type == "reinforcedInductionPort", "induction matrix", "SPS")
+            local dev = tri(type == "inductionPort" or type == "reinforcedInductionPort", "matrice d induction", "SPS")
             self.p_idx.hide(true)
             self.p_unit.hide(true)
-            self.p_prompt.set_value("This is the " .. dev .. " for the facility.")
+            self.p_prompt.set_value("Ceci est la/le " .. dev .. " de l installation.")
             self.p_assign_btn.hide(true)
             self.p_desc.reposition(1, 7)
-            self.p_desc.set_value("There can only be one of these devices per SCADA network, so it will be assigned as the sole " .. dev .. " for the facility. There must only be one of these across all the RTUs you have.")
+            self.p_desc.set_value("Il ne peut y avoir qu un seul appareil de ce type par reseau SCADA, il sera donc affecte comme unique " .. dev .. " de l installation. Il ne doit y en avoir qu un seul sur l ensemble de vos RTU.")
         else
             assert(false, "invalid peripheral type after type validation")
         end
@@ -212,7 +212,7 @@ function peripherals.create(tool_ctl, main_pane, cfg_sys, peri_cfg, style)
 
                 ---@cast entry ppm_entry
                 local line = Div{parent=self.ppm_devs,height=2,fg_bg=cpair(colors.black,bkg)}
-                PushButton{parent=line,y=1,min_width=9,alignment=LEFT,height=1,text="> SELECT",callback=function()new_peri(name,entry.type)end,fg_bg=cpair(colors.black,colors.purple),active_fg_bg=cpair(colors.white,colors.black)}
+                PushButton{parent=line,y=1,min_width=11,alignment=LEFT,height=1,text="> CHOISIR",callback=function()new_peri(name,entry.type)end,fg_bg=cpair(colors.black,colors.purple),active_fg_bg=cpair(colors.white,colors.black)}
                 TextBox{parent=line,x=11,y=1,text=name,fg_bg=cpair(colors.black,bkg)}
                 TextBox{parent=line,x=11,y=2,text=entry.type,fg_bg=cpair(colors.gray,bkg)}
 
@@ -223,11 +223,11 @@ function peripherals.create(tool_ctl, main_pane, cfg_sys, peri_cfg, style)
 
     tool_ctl.update_peri_list()
 
-    TextBox{parent=peri_c_3,y=1,height=4,text="This feature is intended for advanced users. If you just can't see your device, click 'I don't see my device!' instead."}
-    TextBox{parent=peri_c_3,y=5,height=4,text="Peripheral Name"}
+    TextBox{parent=peri_c_3,y=1,height=4,text="Cette fonction est destinee aux utilisateurs avances. Si vous ne voyez vraiment pas votre appareil, cliquez plutot sur 'Je ne vois pas mon appareil !'."}
+    TextBox{parent=peri_c_3,y=5,height=4,text="Nom du peripherique"}
     local p_name = TextField{parent=peri_c_3,y=6,width=49,height=1,max_len=128,fg_bg=bw_fg_bg}
     local p_type = Radio2D{parent=peri_c_3,y=8,rows=6,columns=2,default=1,options=RTU_DEV_TYPES,radio_colors=cpair(colors.lightGray,colors.black),select_color=colors.purple}
-    local man_p_err = TextBox{parent=peri_c_3,x=8,y=14,width=35,text="Please enter a peripheral name.",fg_bg=cpair(colors.red,colors.lightGray),hidden=true}
+    local man_p_err = TextBox{parent=peri_c_3,x=8,y=14,width=35,text="Veuillez saisir un nom de peripherique.",fg_bg=cpair(colors.red,colors.lightGray),hidden=true}
     man_p_err.hide(true)
 
     local function submit_manual_peri()
@@ -239,13 +239,13 @@ function peripherals.create(tool_ctl, main_pane, cfg_sys, peri_cfg, style)
         else man_p_err.show() end
     end
 
-    PushButton{parent=peri_c_3,y=14,text="\x1b Back",callback=function()peri_pane.set_value(2)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
-    PushButton{parent=peri_c_3,x=44,y=14,text="Next \x1a",callback=submit_manual_peri,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
+    PushButton{parent=peri_c_3,y=14,text="\x1b Retour",callback=function()peri_pane.set_value(2)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
+    PushButton{parent=peri_c_3,x=43,y=14,text="Suiv. \x1a",callback=submit_manual_peri,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
 
     self.p_name_msg = TextBox{parent=peri_c_4,y=1,height=2,text=""}
     self.p_prompt = TextBox{parent=peri_c_4,y=4,height=2,text=""}
     self.p_idx = NumberField{parent=peri_c_4,x=31,y=4,width=4,max_chars=2,min=1,max=2,default=1,fg_bg=bw_fg_bg,dis_fg_bg=btn_dis_fg_bg}
-    self.p_assign_btn = RadioButton{parent=peri_c_4,y=5,default=1,options={"the facility","reactor unit #"},callback=function(v)self.p_assign(v)end,radio_colors=cpair(colors.lightGray,colors.black),select_color=colors.purple}
+    self.p_assign_btn = RadioButton{parent=peri_c_4,y=5,default=1,options={"l installation","unite reacteur #"},callback=function(v)self.p_assign(v)end,radio_colors=cpair(colors.lightGray,colors.black),select_color=colors.purple}
 
     self.p_unit = NumberField{parent=peri_c_4,x=23,y=4,width=4,max_chars=2,min=1,max=4,default=1,fg_bg=bw_fg_bg,dis_fg_bg=btn_dis_fg_bg}
     self.p_unit.disable()
@@ -295,7 +295,7 @@ function peripherals.create(tool_ctl, main_pane, cfg_sys, peri_cfg, style)
             if (peri_type == "dynamicValve" or peri_type == "environmentDetector" or peri_type == "environment_detector") and for_facility then
                 -- skip
             elseif not (util.is_int(u) and u > 0 and u < 5) then
-                self.p_err.set_value("Unit ID must be within 1 to 4.")
+                self.p_err.set_value("L ID unite doit etre entre 1 et 4.")
                 self.p_err.show()
                 return
             else unit = u end
@@ -303,19 +303,19 @@ function peripherals.create(tool_ctl, main_pane, cfg_sys, peri_cfg, style)
 
         if peri_type == "boilerValve" then
             if not (idx == 1 or idx == 2) then
-                self.p_err.set_value("Index must be 1 or 2.")
+                self.p_err.set_value("L index doit etre 1 ou 2.")
                 self.p_err.show()
                 return
             else index = idx end
         elseif peri_type == "turbineValve" then
             if not (idx == 1 or idx == 2 or idx == 3) then
-                self.p_err.set_value("Index must be 1, 2, or 3.")
+                self.p_err.set_value("L index doit etre 1, 2 ou 3.")
                 self.p_err.show()
                 return
             else index = idx end
         elseif peri_type == "dynamicValve" and for_facility then
             if not (util.is_int(idx) and idx > 0 and idx < 5) then
-                self.p_err.set_value("Index must be within 1 to 4.")
+                self.p_err.set_value("L index doit etre entre 1 et 4.")
                 self.p_err.show()
                 return
             else index = idx end
@@ -325,7 +325,7 @@ function peripherals.create(tool_ctl, main_pane, cfg_sys, peri_cfg, style)
             index = 1
         elseif peri_type == "environmentDetector" or peri_type == "environment_detector" then
             if not (util.is_int(idx) and idx > 0) then
-                self.p_err.set_value("Index must be greater than 0.")
+                self.p_err.set_value("L index doit etre superieur a 0.")
                 self.p_err.show()
                 return
             else index = idx end
@@ -350,16 +350,16 @@ function peripherals.create(tool_ctl, main_pane, cfg_sys, peri_cfg, style)
         self.p_idx.set_value(1)
     end
 
-    PushButton{parent=peri_c_4,y=14,text="\x1b Back",callback=back_from_peri_opts,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
-    PushButton{parent=peri_c_4,x=41,y=14,min_width=9,text="Confirm",callback=save_peri_entry,fg_bg=cpair(colors.black,colors.blue),active_fg_bg=btn_act_fg_bg}
+    PushButton{parent=peri_c_4,y=14,text="\x1b Retour",callback=back_from_peri_opts,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
+    PushButton{parent=peri_c_4,x=41,y=14,min_width=9,text="Confirmer",callback=save_peri_entry,fg_bg=cpair(colors.black,colors.blue),active_fg_bg=btn_act_fg_bg}
 
-    TextBox{parent=peri_c_5,y=1,text="Settings saved!"}
-    PushButton{parent=peri_c_5,y=14,text="\x1b Back",callback=function()peri_pane.set_value(1)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
-    PushButton{parent=peri_c_5,x=44,y=14,min_width=6,text="Home",callback=function()tool_ctl.go_home()end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
+    TextBox{parent=peri_c_5,y=1,text="Parametres enregistres !"}
+    PushButton{parent=peri_c_5,y=14,text="\x1b Retour",callback=function()peri_pane.set_value(1)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
+    PushButton{parent=peri_c_5,x=42,y=14,min_width=8,text="Accueil",callback=function()tool_ctl.go_home()end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
 
-    TextBox{parent=peri_c_6,y=1,height=5,text="Failed to save the settings file.\n\nThere may not be enough space for the modification or server file permissions may be denying writes."}
-    PushButton{parent=peri_c_6,y=14,text="\x1b Back",callback=function()peri_pane.set_value(1)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
-    PushButton{parent=peri_c_6,x=44,y=14,min_width=6,text="Home",callback=function()tool_ctl.go_home()end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
+    TextBox{parent=peri_c_6,y=1,height=5,text="Echec de l enregistrement du fichier de configuration.\n\nIl se peut qu il n y ait pas assez d espace pour la modification ou que les permissions du serveur refusent l ecriture."}
+    PushButton{parent=peri_c_6,y=14,text="\x1b Retour",callback=function()peri_pane.set_value(1)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
+    PushButton{parent=peri_c_6,x=42,y=14,min_width=8,text="Accueil",callback=function()tool_ctl.go_home()end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
 
     --#endregion
 
@@ -400,7 +400,7 @@ function peripherals.create(tool_ctl, main_pane, cfg_sys, peri_cfg, style)
             local def = tmp_cfg.Peripherals[i]
 
             local t = ppm.get_type(def.name)
-            local t_str = "<disconnected> (connect to edit)"
+            local t_str = "<deconnecte> (connecter pour editer)"
             local disconnected = t == nil
 
             if not disconnected then t_str = "[" .. t .. "]" end
@@ -412,17 +412,17 @@ function peripherals.create(tool_ctl, main_pane, cfg_sys, peri_cfg, style)
             end
 
             if type(def.unit) == "number" then
-                desc = desc .. "for unit " .. def.unit
+                desc = desc .. "pour unite " .. def.unit
             else
-                desc = desc .. "for the facility"
+                desc = desc .. "pour l installation"
             end
 
             local entry = Div{parent=peri_list,height=3}
             TextBox{parent=entry,y=1,text="@ "..def.name,fg_bg=cpair(colors.black,colors.white)}
             TextBox{parent=entry,y=2,text="  \x1a "..t_str,fg_bg=cpair(colors.gray,colors.white)}
             TextBox{parent=entry,y=3,text=desc,fg_bg=cpair(colors.gray,colors.white)}
-            local edit_btn = PushButton{parent=entry,x=41,y=2,min_width=8,height=1,text="EDIT",callback=function()edit_peri_entry(i,def,t or "")end,fg_bg=cpair(colors.black,colors.blue),active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
-            PushButton{parent=entry,x=41,y=3,min_width=8,height=1,text="DELETE",callback=function()delete_peri_entry(i)end,fg_bg=cpair(colors.black,colors.red),active_fg_bg=btn_act_fg_bg}
+            local edit_btn = PushButton{parent=entry,x=40,y=2,min_width=9,height=1,text="EDITER",callback=function()edit_peri_entry(i,def,t or "")end,fg_bg=cpair(colors.black,colors.blue),active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
+            PushButton{parent=entry,x=40,y=3,min_width=9,height=1,text="SUPPR.",callback=function()delete_peri_entry(i)end,fg_bg=cpair(colors.black,colors.red),active_fg_bg=btn_act_fg_bg}
 
             if disconnected then edit_btn.disable() end
 

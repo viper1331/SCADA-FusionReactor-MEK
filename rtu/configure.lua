@@ -32,13 +32,13 @@ local CENTER = core.ALIGN.CENTER
 
 -- changes to the config data/format to let the user know
 local changes = {
-    { "v1.7.9", { "ConnTimeout can now have a fractional part" } },
-    { "v1.7.15", { "Added front panel UI theme", "Added color accessibility modes" } },
-    { "v1.9.2", { "Added standard with black off state color mode", "Added blue indicator color modes" } },
-    { "v1.10.2", { "Re-organized peripheral configuration UI, resulting in some input fields being re-ordered" } },
-    { "v1.11.8", { "Added advanced option to invert digital redstone signals" } },
-    { "v1.12.0", { "Added support for redstone relays" } },
-    { "v1.13.0", { "Added support for wired communications modems" } }
+    { "v1.7.9", { "ConnTimeout peut maintenant avoir une partie decimale" } },
+    { "v1.7.15", { "Ajout du theme d'interface du panneau frontal", "Ajout des modes d'accessibilite des couleurs" } },
+    { "v1.9.2", { "Ajout du mode standard avec etat eteint noir", "Ajout des modes d'indicateurs bleus" } },
+    { "v1.10.2", { "Reorganisation de l'UI de configuration des peripheriques, entrainant un re-ordonnancement de certains champs" } },
+    { "v1.11.8", { "Ajout de l'option avancee pour inverser les signaux redstone numeriques" } },
+    { "v1.12.0", { "Ajout du support des relais redstone" } },
+    { "v1.13.0", { "Ajout du support des modems de communication cables" } }
 }
 
 ---@class rtu_configurator
@@ -111,20 +111,20 @@ local ini_cfg = {}
 local settings_cfg = {}
 
 local fields = {
-    { "SpeakerVolume", "Speaker Volume", 1.0 },
-    { "WirelessModem", "Wireless/Ender Comms Modem", true },
-    { "WiredModem", "Wired Comms Modem", false },
-    { "PreferWireless", "Prefer Wireless Modem", true },
-    { "SVR_Channel", "SVR Channel", 16240 },
-    { "RTU_Channel", "RTU Channel", 16242 },
-    { "ConnTimeout", "Connection Timeout", 5 },
-    { "TrustedRange", "Trusted Range", 0 },
-    { "AuthKey", "Facility Auth Key", "" },
-    { "LogMode", "Log Mode", log.MODE.APPEND },
-    { "LogPath", "Log Path", "/log.txt" },
-    { "LogDebug", "Log Debug Messages", false },
-    { "FrontPanelTheme", "Front Panel Theme", themes.FP_THEME.SANDSTONE },
-    { "ColorMode", "Color Mode", themes.COLOR_MODE.STANDARD }
+    { "SpeakerVolume", "Volume haut-parleur", 1.0 },
+    { "WirelessModem", "Modem sans fil/Ender", true },
+    { "WiredModem", "Modem de communication cable", false },
+    { "PreferWireless", "Preferer le modem sans fil", true },
+    { "SVR_Channel", "Canal SVR", 16240 },
+    { "RTU_Channel", "Canal RTU", 16242 },
+    { "ConnTimeout", "Delai de connexion", 5 },
+    { "TrustedRange", "Portee de confiance", 0 },
+    { "AuthKey", "Cle d'auth installation", "" },
+    { "LogMode", "Mode journal", log.MODE.APPEND },
+    { "LogPath", "Chemin du journal", "/log.txt" },
+    { "LogDebug", "Messages debug journal", false },
+    { "FrontPanelTheme", "Theme panneau frontal", themes.FP_THEME.SANDSTONE },
+    { "ColorMode", "Mode couleur", themes.COLOR_MODE.STANDARD }
 }
 
 -- deep copy peripherals defs
@@ -171,7 +171,7 @@ local function config_view(display)
 ---@diagnostic disable-next-line: undefined-field
     local function exit() os.queueEvent("terminate") end
 
-    TextBox{parent=display,y=1,text="RTU Gateway Configurator",alignment=CENTER,fg_bg=style.header}
+    TextBox{parent=display,y=1,text="Configurateur Passerelle RTU",alignment=CENTER,fg_bg=style.header}
 
     local root_pane_div = Div{parent=display,y=2}
 
@@ -193,10 +193,10 @@ local function config_view(display)
     local y_start = 2
 
     if tool_ctl.ask_config then
-        TextBox{parent=main_page,x=2,y=y_start,height=4,width=49,text="Notice: This device is not configured for this version of the RTU gateway. If you previously had a valid config, it's not lost. You may want to check the Change Log to see what changed.",fg_bg=cpair(colors.red,colors.lightGray)}
+        TextBox{parent=main_page,x=2,y=y_start,height=4,width=49,text="Note : cet appareil n'est pas configure pour cette version de la passerelle RTU. Si vous aviez deja une configuration valide, elle n'est pas perdue. Consultez le journal des changements pour voir les differences.",fg_bg=cpair(colors.red,colors.lightGray)}
         y_start = y_start + 5
     else
-        TextBox{parent=main_page,x=2,y=2,height=2,text="Welcome to the RTU gateway configurator! Please select one of the following options."}
+        TextBox{parent=main_page,x=2,y=2,height=2,text="Bienvenue dans le configurateur de passerelle RTU ! Veuillez selectionner une des options suivantes."}
         y_start = y_start + 3
     end
 
@@ -209,7 +209,7 @@ local function config_view(display)
     end
 
     if fs.exists("/rtu/config.lua") then
-        PushButton{parent=main_page,x=2,y=y_start,min_width=28,text="Import Legacy 'config.lua'",callback=function()tool_ctl.load_legacy()end,fg_bg=cpair(colors.black,colors.cyan),active_fg_bg=btn_act_fg_bg}
+        PushButton{parent=main_page,x=2,y=y_start,min_width=28,text="Importer ancien 'config.lua'",callback=function()tool_ctl.load_legacy()end,fg_bg=cpair(colors.black,colors.cyan),active_fg_bg=btn_act_fg_bg}
         y_start = y_start + 2
     end
 
@@ -222,10 +222,10 @@ local function config_view(display)
         main_pane.set_value(9)
     end
 
-    PushButton{parent=main_page,x=2,y=y_start,min_width=19,text="Configure Gateway",callback=function()main_pane.set_value(2)end,fg_bg=cpair(colors.black,colors.blue),active_fg_bg=btn_act_fg_bg}
-    tool_ctl.view_gw_cfg = PushButton{parent=main_page,x=2,y=y_start+2,min_width=28,text="View Gateway Configuration",callback=view_config,fg_bg=cpair(colors.black,colors.blue),active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
-    tool_ctl.dev_cfg = PushButton{parent=main_page,x=2,y=y_start+4,min_width=24,text="Peripheral Connections",callback=show_peri_conns,fg_bg=cpair(colors.black,colors.yellow),active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
-    tool_ctl.rs_cfg = PushButton{parent=main_page,x=2,y=y_start+6,min_width=22,text="Redstone Connections",callback=show_rs_conns,fg_bg=cpair(colors.black,colors.yellow),active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
+    PushButton{parent=main_page,x=2,y=y_start,min_width=22,text="Configurer passerelle",callback=function()main_pane.set_value(2)end,fg_bg=cpair(colors.black,colors.blue),active_fg_bg=btn_act_fg_bg}
+    tool_ctl.view_gw_cfg = PushButton{parent=main_page,x=2,y=y_start+2,min_width=30,text="Voir config passerelle",callback=view_config,fg_bg=cpair(colors.black,colors.blue),active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
+    tool_ctl.dev_cfg = PushButton{parent=main_page,x=2,y=y_start+4,min_width=24,text="Connexions peripheriques",callback=show_peri_conns,fg_bg=cpair(colors.black,colors.yellow),active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
+    tool_ctl.rs_cfg = PushButton{parent=main_page,x=2,y=y_start+6,min_width=21,text="Connexions redstone",callback=show_rs_conns,fg_bg=cpair(colors.black,colors.yellow),active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
 
     local function jump_color()
         tool_ctl.jumped_to_color = true
@@ -239,11 +239,11 @@ local function config_view(display)
         exit()
     end
 
-    PushButton{parent=main_page,x=2,y=17,min_width=6,text="Exit",callback=exit,fg_bg=cpair(colors.black,colors.red),active_fg_bg=btn_act_fg_bg}
-    local start_btn = PushButton{parent=main_page,x=42,y=17,min_width=9,text="Startup",callback=startup,fg_bg=cpair(colors.black,colors.green),active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
-    PushButton{parent=main_page,x=39,y=y_start,min_width=12,text="Self-Check",callback=function()main_pane.set_value(10)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
-    tool_ctl.color_cfg = PushButton{parent=main_page,x=36,y=y_start+2,min_width=15,text="Color Options",callback=jump_color,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
-    PushButton{parent=main_page,x=39,y=y_start+4,min_width=12,text="Change Log",callback=function()main_pane.set_value(7)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
+    PushButton{parent=main_page,x=2,y=17,min_width=6,text="Sortie",callback=exit,fg_bg=cpair(colors.black,colors.red),active_fg_bg=btn_act_fg_bg}
+    local start_btn = PushButton{parent=main_page,x=40,y=17,min_width=11,text="Demarrage",callback=startup,fg_bg=cpair(colors.black,colors.green),active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
+    PushButton{parent=main_page,x=35,y=y_start,min_width=16,text="Auto-verification",callback=function()main_pane.set_value(10)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
+    tool_ctl.color_cfg = PushButton{parent=main_page,x=33,y=y_start+2,min_width=18,text="Options couleurs",callback=jump_color,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg,dis_fg_bg=btn_dis_fg_bg}
+    PushButton{parent=main_page,x=33,y=y_start+4,min_width=18,text="Journal changements",callback=function()main_pane.set_value(7)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
 
     if tool_ctl.ask_config then start_btn.disable() end
 
@@ -283,7 +283,7 @@ local function config_view(display)
 
     local cl = Div{parent=changelog,x=2,y=4,width=49}
 
-    TextBox{parent=changelog,y=2,text=" Config Change Log",fg_bg=bw_fg_bg}
+    TextBox{parent=changelog,y=2,text=" Journal des changements",fg_bg=bw_fg_bg}
 
     local c_log = ListBox{parent=cl,y=1,height=12,width=49,scroll_height=100,fg_bg=bw_fg_bg,nav_fg_bg=g_lg_fg_bg,nav_active=cpair(colors.black,colors.gray)}
 
@@ -296,7 +296,7 @@ local function config_view(display)
         end
     end
 
-    PushButton{parent=cl,y=14,text="\x1b Back",callback=function()main_pane.set_value(1)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
+    PushButton{parent=cl,y=14,text="\x1b Retour",callback=function()main_pane.set_value(1)end,fg_bg=nav_fg_bg,active_fg_bg=btn_act_fg_bg}
 
     --#endregion
 
@@ -387,7 +387,7 @@ function configurator.configure(ask_config)
 
     reset_term()
     if not status then
-        println("configurator error: " .. error)
+        println("erreur configurateur: " .. error)
     end
 
     return status, error, tool_ctl.launch_startup
