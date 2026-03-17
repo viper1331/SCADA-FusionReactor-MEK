@@ -129,7 +129,9 @@ local function self_check()
 
     self.self_check_pass = true
 
-    local cfg = self.settings
+    local cfg = self.settings or {}
+    local redstone_defs = tri(type(cfg.Redstone) == "table", cfg.Redstone, {})
+    local peri_defs = tri(type(cfg.Peripherals) == "table", cfg.Peripherals, {})
     self.wd_modem = ppm.get_modem(cfg.WiredModem)
     self.wl_modem = ppm.get_wireless_modem()
     local valid_cfg = rtu.validate_config(cfg)
@@ -149,12 +151,17 @@ local function self_check()
     local phys = {} ---@type rtu_rs_definition[][]
     local inputs = { [0] = {}, {}, {}, {}, {} }
 
-    for i = 1, #cfg.Redstone do
-        local entry = cfg.Redstone[i]
-        local name = entry.relay or "local"
+    for i = 1, #redstone_defs do
+        local entry = redstone_defs[i]
 
-        if phys[name] == nil then phys[name] = {} end
-        table.insert(phys[entry.relay or "local"], entry)
+        if type(entry) == "table" then
+            local name = entry.relay or "local"
+
+            if phys[name] == nil then phys[name] = {} end
+            table.insert(phys[entry.relay or "local"], entry)
+        else
+            self.self_check_msg("> verifier entree redstone #" .. i .. "...", false, "format d entree redstone invalide, veuillez la reconfigurer")
+        end
     end
 
     for name, entries in pairs(phys) do
@@ -187,12 +194,19 @@ local function self_check()
     end
 
     -- check peripheral configurations
-    for i = 1, #cfg.Peripherals do
-        local entry = cfg.Peripherals[i]
+    for i = 1, #peri_defs do
+        local entry = peri_defs[i]
+        local entry_name = "peripherique #" .. i
         local valid = false
 
-        if type(entry.name) == "string" then
-            self.self_check_msg("> verifier " .. entry.name .. " connecte...", ppm.get_periph(entry.name), "veuillez connecter cet appareil via modem filaire ou contact direct, et verifier que la configuration correspond a son nom detecte")
+        if type(entry) == "table" and type(entry.name) == "string" then
+            entry_name = entry.name
+        end
+
+        if type(entry) ~= "table" then
+            self.self_check_msg("> verifier " .. entry_name .. "...", false, "format d entree peripherique invalide, veuillez la reconfigurer")
+        elseif type(entry.name) == "string" then
+            self.self_check_msg("> verifier " .. entry_name .. " connecte...", ppm.get_periph(entry.name), "veuillez connecter cet appareil via modem filaire ou contact direct, et verifier que la configuration correspond a son nom detecte")
 
             local p_type = ppm.get_type(entry.name)
 
@@ -212,13 +226,13 @@ local function self_check()
                 valid = true
 
                 if p_type ~= nil and not (p_type == "inductionPort" or p_type == "reinforcedInductionPort" or p_type == "spsPort" or p_type == "fusionReactorController" or p_type == "fusionReactorPort") then
-                    self.self_check_msg("> verifier " .. entry.name .. " valide...", false, "type d appareil non reconnu")
+                    self.self_check_msg("> verifier " .. entry_name .. " valide...", false, "type d appareil non reconnu")
                 end
             end
         end
 
-        if not valid then
-            self.self_check_msg("> verifier " .. entry.name .. " valide...", false, "configuration invalide, veuillez reconfigurer cette entree peripherique")
+        if (not valid) and type(entry) == "table" then
+            self.self_check_msg("> verifier " .. entry_name .. " valide...", false, "configuration invalide, veuillez reconfigurer cette entree peripherique")
         end
     end
 
