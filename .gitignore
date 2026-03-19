@@ -1,2 +1,4 @@
-_*/
-/*program.sh
+# Local artifacts that must never be pushed.
+/.codex/
+/smoke.lua
+/test/

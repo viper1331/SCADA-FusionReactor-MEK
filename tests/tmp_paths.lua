@@ -1,0 +1,5 @@
+print('cwd', shell.dir())
+print('exists io/display_backend.lua', fs.exists('io/display_backend.lua'))
+print('exists /io/display_backend.lua', fs.exists('/io/display_backend.lua'))
+print('exists ../io/display_backend.lua', fs.exists('../io/display_backend.lua'))
+print('running', shell.getRunningProgram())
