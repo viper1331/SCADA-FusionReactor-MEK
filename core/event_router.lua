@@ -90,7 +90,11 @@ local function handleMainChar(ch, api)
     state.currentView = "setup"
     api.pushEvent("View setup")
   elseif ch == "i" then
-    api.triggerAutomaticIgnitionSequence()
+    if api.fusionPlc and type(api.fusionPlc.start) == "function" then
+      api.fusionPlc.start()
+    else
+      api.triggerAutomaticIgnitionSequence()
+    end
   elseif ch == "l" then
     api.fireLaser()
   elseif ch == "o" then
@@ -145,6 +149,9 @@ function M.route(ev, p1, p2, p3, api)
   if ev == "peripheral" or ev == "peripheral_detach" then
     logDebug("Peripheral topology changed", { event = ev, side = tostring(p1) })
     api.setupMonitor()
+    if api.fusionPlc and type(api.fusionPlc.refresh_devices) == "function" then
+      api.fusionPlc.refresh_devices()
+    end
     state.uiDrawn = false
     if state.choosingMonitor then
       state.monitorList = api.getMonitorCandidates()

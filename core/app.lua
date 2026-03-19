@@ -29,6 +29,7 @@ function M.run()
   local CoreStartup = require("core.startup")
   local CoreRuntimeLoop = require("core.runtime_loop")
   local CoreRuntimeRefresh = require("core.runtime_refresh")
+  local PlcController = require("core.plc.controller")
   local RuntimeConfig = require("core.runtime_config")
   local IoDevices = require("io.devices")
   local IoReaders = require("io.readers")
@@ -50,6 +51,7 @@ function M.run()
   local HITBOX_DEFAULTS = runtime.hitboxDefaults
 
   local state = CoreState.new(CoreState.defaultRuntimeState(LOCAL_VERSION, UPDATE_ENABLED))
+  state.runtimeRole = tostring(CFG.role or state.runtimeRole or "plc")
   local hw = CoreState.defaultHardwareState()
   local setupMonitor
   local logger = CoreLogger.new({
@@ -701,6 +703,7 @@ function M.run()
   local function applyConfigToRuntime(config)
     if type(config) ~= "table" then return end
     CoreConfig.applyConfigToRuntime(config, CFG)
+    state.runtimeRole = tostring(CFG.role or state.runtimeRole or "plc")
     logger.configure({
       enabled = CFG.logEnabled,
       level = CFG.logLevel,
@@ -727,6 +730,7 @@ function M.run()
       UPDATE_ENABLED = config.update.enabled and true or false
     end
     logger.info("Runtime config applied", {
+      role = state.runtimeRole,
       output = CFG.displayOutput,
       displayBackend = CFG.displayBackend,
       preferredMonitor = CFG.preferredMonitor or "none",
@@ -2012,6 +2016,15 @@ function M.run()
     log = logger,
   })
 
+  local fusionPlc = PlcController.build({
+    state = state,
+    hw = hw,
+    runtimeRefresh = runtimeRefresh,
+    runtimeActions = runtimeActions,
+    runtimeAlerts = runtimeAlerts,
+    log = logger,
+  })
+
   function getHitboxBucket(source)
     return source == "monitor" and touchHitboxes.monitor or touchHitboxes.terminal
   end
@@ -2481,7 +2494,7 @@ function M.run()
       stopMonitorSelection = stopMonitorSelection,
       startMonitorSelection = startMonitorSelection,
       refreshNow = function()
-        refreshAll()
+        fusionPlc.refresh_devices()
         state.lastAction = "Refresh"
       end,
       setView = function(view)
@@ -2489,9 +2502,9 @@ function M.run()
         pushEvent("View " .. view)
       end,
       canIgnite = runtimeAlerts.canIgnite,
-      startReactorSequence = runtimeActions.startReactorSequence,
-      stopManualReactor = function() runtimeActions.stopReactorSequence("ARRET DEMANDE") end,
-      stopRequested = function() runtimeActions.stopReactorSequence("ARRET DEMANDE") end,
+      startReactorSequence = fusionPlc.start,
+      stopManualReactor = function() fusionPlc.stop("ARRET DEMANDE") end,
+      stopRequested = function() fusionPlc.stop("ARRET DEMANDE") end,
       toggleTritium = function() runtimeActions.openTritium(not state.tOpen) end,
       toggleDeuterium = function() runtimeActions.openDeuterium(not state.dOpen) end,
       toggleDTFuel = function()
@@ -2874,7 +2887,7 @@ function M.run()
     hw = hw,
     CFG = CFG,
     refreshAll = refreshAll,
-    fullAuto = runtimeActions.fullAuto,
+    fullAuto = fusionPlc.run_cycle,
     drawUI = drawUI,
     handleClick = handleClick,
     setupMonitor = setupMonitor,
@@ -2885,8 +2898,9 @@ function M.run()
     openDTFuel = runtimeActions.openDTFuel,
     openSeparatedGases = runtimeActions.openSeparatedGases,
     setLaserCharge = runtimeActions.setLaserCharge,
-    triggerAutomaticIgnitionSequence = runtimeActions.triggerAutomaticIgnitionSequence,
+    triggerAutomaticIgnitionSequence = fusionPlc.start,
     fireLaser = runtimeActions.fireLaser,
+    fusionPlc = fusionPlc,
     pushEvent = pushEvent,
     log = logger,
   })
@@ -2925,4 +2939,3 @@ function M.run()
 end
 
 return M
-

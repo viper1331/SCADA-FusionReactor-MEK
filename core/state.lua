@@ -10,6 +10,7 @@ end
 
 function M.defaultRuntimeState(localVersion, updateEnabled)
   return {
+    runtimeRole = "plc",
     running = true,
     uiDrawn = false,
     choosingMonitor = false,
@@ -145,6 +146,10 @@ function M.defaultRuntimeState(localVersion, updateEnabled)
 
     tick = 0,
     debugHitboxes = false,
+    plcStartArmed = false,
+    plcStartArmClock = 0,
+    plcSnapshot = nil,
+    plcSafetyCritical = false,
   }
 end
 
