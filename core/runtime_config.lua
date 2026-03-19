@@ -2,6 +2,7 @@ local M = {}
 
 function M.new()
   local cfg = {
+    role = "plc",
     -- Mode dynamique: aucune liaison n'est imposee par defaut.
     preferredMonitor = nil,
     preferredReactor = nil,

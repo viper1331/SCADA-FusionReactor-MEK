@@ -69,6 +69,9 @@ function M.defaultFusionConfig(CFG, updateEnabled)
   return {
     configVersion = 1,
     setupName = "Fusion ViperCraft",
+    runtime = {
+      role = CFG.role or "plc",
+    },
     monitor = { name = CFG.preferredMonitor, scale = CFG.monitorScale },
     devices = {
       reactorController = CFG.preferredReactor,
@@ -162,6 +165,10 @@ end
 
 function M.applyConfigToRuntime(config, CFG)
   if type(config) ~= "table" then return end
+
+  if type(config.runtime) == "table" and type(config.runtime.role) == "string" and config.runtime.role ~= "" then
+    CFG.role = string.lower(config.runtime.role)
+  end
 
   CFG.preferredMonitor = M.sanitizeDeviceName(config.monitor and config.monitor.name, CFG.preferredMonitor)
   CFG.monitorScale = M.sanitizeMonitorScale(config.monitor and config.monitor.scale, CFG.monitorScale)

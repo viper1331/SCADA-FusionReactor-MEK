@@ -11,6 +11,7 @@ function M.run(ctx)
 
   local requiredDirs = {
     "core",
+    "core/plc",
     "io",
     "ui",
     "tests",
@@ -26,6 +27,8 @@ function M.run(ctx)
     "core/logger.lua",
     "core/temperature.lua",
     "core/runtime_loop.lua",
+    "core/plc/controller.lua",
+    "core/plc/state.lua",
     "io/display_backend.lua",
     "tests/energy_units.lua",
     "tests/temperature_units.lua",
@@ -35,6 +38,7 @@ function M.run(ctx)
     "tests/config_laser_count.lua",
     "tests/logger.lua",
     "tests/display_backend.lua",
+    "tests/plc_controller.lua",
     "tests/install_display_dtfuel_config.lua",
     "tests/reactor_diagram_render.lua",
     "tests/responsive_render.lua",
